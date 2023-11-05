@@ -1,0 +1,382 @@
+First things you should do when starting up an ubuntu image is the forensics questions. 
+
+The second thing that you should do is download the firewall and enable. {reject incoming traffic and enable outgoing traffic} (Keep on profile "Home")
+
+ANTIVIRUS = sudo apt install clamscan
+
+'ls -la' will give you a list of all of the hidden files in bash terminal
+
+Cyberpatriot uses hidden files to hide media files. 
+
+Cyberpatriot usually uses .mp3s or other media files like that because some .jpgs are used as bacgrounds and emblems in ubuntu.
+
+
+LIST OF THINGS TO DO TO SECURE A LINUX MACHINE 1) Forensics questions  2) system wide updates  3) firewall enable  4) antivirus 
+
+(see line 5)  5) user accounts (check for privaleges as well as passwords)  6) Check for newest versions of programs that are 
+
+installed system wide  7) Get Firefox and make sure that it is updated  8) Firefox settings {(Don't ask to save logins and 
+
+passwords for websites); (Block pop-up windows); (warn when websites try to install add-ons); (block dangerous and deceptive 
+
+content); (block dangerous downloads); (delete cookies when you close firefox)}  9) go to cyberpatriot website and go to training 
+
+modules, then go to Unit 8 which is ubuntu security look for PAM files edit them according to specs on website. 
+
+(cd / \ cd etc/pam.d/ \ sudo apt install libpam-cracklib \ sudo nano common-password \ (add remeber=5 after pam_unix.so) 
+
+(also add ucredit=-10 lcredit=-1 dcredit=-1 ocredit=-1 to the end of the line with pam_cracklib.so in it to enforce stronger passwords) 
+
+\ sudo nano ../login.defs (PASS_MAX_DAYS 90 PASS_MIN_DAYS 10 PASS_WARN_AGE 7) \ sudo nano common-auth (add "auth required pam_tally2.so 
+
+deny=5 onerr=fail unlock_time=1800" to end of file) (end of cyberpatriot helpfulness according to video)  10) Find hidden files and 
+
+media files (ls -la will give list of hidden files) (locate *.mp3 at root will find all .mp3 files from root of the 
+
+directory.(replace .mp3 with whatever file extension you want to find and it will find it example: *.mp4 or *.jpg))  
+
+11) look for suspicious files located wherever the programs are installed on the image. (list of possible suspicious 
+
+programs {nmap, metasploit, armitage, aircrack-ng, burpsuite, ophcrack, and wireshark {nmap and ophcrack a lot}}  
+
+12) install bum (boot-up manager)  13) secure password and shadow files (make sure that your password and shadow files are not 
+
+accessible by guests or non-admins)  14) get rid of guest accounts cyberpatriot.com then training modules then Unit 8 ubuntu 
+
+security (root@ubuntu:/home/cyberpatriot# gedit /etc/lightdm/lightdm.conf \ (sudo nano /etc/lightdm/lightdm.conf.d  add the line 
+
+'allow-guest=false'
+
+
+This video was at this address https://www.youtube.com/watch?v=JVxkTqLoyGY
+
+
+
+ADDED ON 11/02/2023
+
+## Do Forensics questions
+## Remove uneeded permissions from apps that are installed on the system. 
+## Update all software
+## Keep emails in your browser to add an extra layer of protection between the communications and your OS. 
+## Harden firefox with user.js https://github.com/pyllyukko/user.js. 
+## Avoid installing extensions outside of what you need. 
+## Disable bluetooth and network access when not needed. 
+## Disable GPS if enabled. 
+## Randomize MAC and IP addresses. https://manpages.ubuntu.com/manpages/jammy/man1/macchanger.1.html. < Try using this for ubuntu 
+## Use apparmor, Firejail, or SELinux to sandbox applications. 
+## Disable SSH root access. 1. Open the SSH configuration file sshd_config with the text editor vi: vi /etc/ssh/sshd_config 2. In the line PermitRootLogin yes replace 
+## the word Yes with the word No. 3. Save the file. 4. Restart the service. 5. service ssh restart
+## Basic Linux hardening checklist: https://linuxhint.com/linux_security_hardening_checklist/ Advanced Linux hardening (Taken from NSA (Legally)): https://github.com/shaurya-007/NSA-Linux-Hardening-docs
+## Try disabling the webcam/microphone.
+## Check user permissions
+## Check user passwords
+## Change user password length minimum
+## Change user password Maximum age
+## Change user password minimum password length
+## Try enabling SELinux (Could possibly lose points)
+## Update the kernel
+## Set up Honeypots/honeynets link https://linuxhint.com/honeypots-honeynets/
+## Check these links for scanning the system externally for vulnerabilties: https://linuxhint.com/nmap-port-scanning-security/ https://linuxhint.com/ https://linuxhint.com/install_nexpose_vulnerability_scanner_debian_ubuntu/nikto_vulnerability_scanner/
+## Set up Keepass for easier password management during the competition. Command to install is 'sudo apt install keepass2'.
+## Then just set up a database and store the SUDO password, and admin's passwords within to make it quicker when they are needed. 
+## top (htop is prettier) command can be used as a task manager
+## DIFF displays the differences between two files
+## PS displays information about current running processes. 
+## Make sure that normal users do not have access to the shadow or passwd files using chmod. 
+## ?Create backups?
+## You can also disable SSH password and replace it with another form of identification, such as ssh-keygen according to this site: https://thesecmaster.com/the-ultimate-guide-to-harden-the-ubuntu-server-linux-server-hardening/
+## If apparmor is not already installed, install it and enable with the following commands: sudo systemctl status apparmor/sudo systemctl start apparmor/sudo systemctl enable apparmor/sudo apparmor_status
+## Set ufw to allow HTTP and HTTPS using the following commands: sudo ufw allow http/sudo ufw allow https
+## use apt search to find a given package name. (like when looking for the name of a hacking tool.)
+## Enable automatic updates system wide in the software repository thingy. 
+## Also netstat is super useful to display network statistics. 
+
+
+sudo apt update -y && sudo apt upgrade -y
+sudo apt install unattended-upgrades
+sudo enable ufw
+sudo apt list --installed
+sudo apt autoremove
+
+find / -type f -name "*.mp3"
+find / -type f -name "*.mp4"
+find / -type f -name "*.jpg"
+find / -type f -name "*.jpeg"
+find / -type f -name "*.png"
+find / -type f -name "*.webm"
+
+## tool that detects the presence of rootkits that are currently installed on the given system
+
+sudo apt install chkrootkit -y
+sudo chkrootkit
+
+## Change the portion that says RUN_DAILY=”false” to RUN_DAILY=”true”
+
+nano /etc/chkrootkit.conf
+
+## rkhunter also works like chrootkit
+
+## disable root ssh access with the following
+
+nano /etc/ssh/sshd_config
+
+## Uncomment the line that says #PermitRootLogin prohibit-password and replace prohibit-password with 'no'
+
+## Change the default ssh port by using the following command
+
+nano /etc/ssh/sshd_config
+
+## Just add a line that says 'Port 7645' or something similar and make sure that that port is not blocked in the firewall. 
+## Then run the following command
+
+service sshd restart
+
+## Also run the following command to configure iptables to allow traffic through the reconfigured port
+
+iptables -t nat -A PREROUTING -p tcp --dport 22 -j REDIRECT --to-port 7645
+
+## You can also use ufw instead
+
+ufw allow 7645/tcp
+
+## This may or may not be relevant, but it might help. 
+## You can define rules to filter ssh traffic using the following commands
+
+iptables -A INPUT -p tcp --dport 22 --source <ALLOWED-IP> -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j DROP
+
+## You can also filter the source that is allowed to ssh by MAC addresses using the following command
+iptables -I INPUT -p tcp --dport 22 -m mac ! --mac-source 02:42:df:a0:d3:8f 
+-j REJECT
+
+## You can also use TCP wrappers to whitelist SSH traffic using the following commands
+
+nano /etc/hosts.deny
+
+## You can add a line to the /etc/hosts.deny doc that says 'sshd : ALL'
+
+nano /etc/hosts.allow
+
+## To whitelist certain IP addresses for SSH'ing, add a line that says 'sshd : <Allowed-IP>' to the /etc/hosts.allow doc
+
+## Check to see if iptables is already installed using the following command
+
+sudo iptables -n -L
+
+## If iptables is not already installed install it using the following command
+
+sudo apt install iptables -y
+
+## Check for previous rules with the following command
+
+sudo iptables -L
+
+## These rules can also be checked in the gufw (GUI Uncomplicated firewall)
+
+## When configuring new rules the format should look like this
+## sudo iptables -P INPUT         <ACCEPT/DROP/REJECT>
+## sudo iptables -P OUTPUT     <ACCEPT/DROP/REJECT>
+## sudo iptables -P FORWARD <ACCEPT/DROP/REJECT>
+## This is a good set of norms for Cyberpatriot (I think)
+
+sudo iptables -P INPUT DROP
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -P FORWARD REJECT
+
+## -P=Policy
+
+## The values that were just entered need to be appended, use the -A=Append parameter to do so
+
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+## I don't really know what that does though ^
+## Direct quote from https://linuxhint.com/iptables-tutorial/ (The loopback interface is used by programs that need to interact with the localhost. If you don’t 
+## allow loopback traffic, some applications may not work. The following command allows loopback connections:)
+
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A OUTPUT -o lo -j ACCEPT
+
+## Another direct quote from (You can also define a permissive policy allowing all traffic except for the specified dropped or rejected. You can enable everything 
+## except a specific IP or IP range, or you can refuse packets based on their headers, among more possibilities. The following example shows how to apply a permissive 
+## policy allowing all traffic except for an IP range blocked for the ssh service.)
+
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -P FORWARD DROP
+sudo iptables -A INPUT -p tcp --dport 22 -m iprange --src-range 192.168.1.100-192.168.1.110 -j REJECT
+
+## You can also block specific ports with TCP using the following command
+
+sudo iptables -A INPUT -p tcp --destination-port 22 -j DROP
+
+## IPTABLES RULES ARE NOT PERSISTENT AND WILL NOT BE RESTORE AFTER A REBOOT SAVE THEM WITH THE FOLLOWING COMMANDS
+## Make sure that the following is in the file '/etc/network/if-pre-up.d/iptables' '#!/bin/sh/sbin/iptables-restore < /etc/iptables.up.rules' 
+
+sudo  iptables-save > /etc/iptables.up.rules
+nano /etc/network/if-pre-up.d/iptables
+
+## Then give the file execution permissions with the following command
+
+chmod +x /etc/network/if-pre-up.d/iptables
+
+## DO NOT RUN THE FOLLOWING COMMAND UNLESS THERE ARE MESSED UP RULES IN IPTABLES (The following command removes the Iptables rules)
+
+sudo iptables -F
+
+## To remove a specific chain like INPUT run the following command 
+
+sudo iptables -F INPUT
+
+## Implement IDS or Intrusion detection system to complement the ufw. The most common are Snort and OSSEC. NOT RECOMMENDED FOR HOME USERS DUE TO THE LARGE NUMBER OF RESOURCES REQUIRED TO RUN. (Don't really know if this is useful.)
+## I doubt that this will actually be required in the competition, but just in case this is the link https://linuxhint.com/snort-ubuntu-tutorial/
+## Also consider encrypting drives in linux even if they are virtual (Just a suggestion may not be possible after installation)
+
+## To install SELinux, you first have to stop and disable apparmor, do this using the following commands. The link to the following information is here: https://www.makeuseof.com/how-to-install-configure-selinux-on-ubuntu/
+
+sudo systemctl stop apparmor
+systemctl status apparmor
+sudo systemctl disable apparmor
+sudo apt-get remove apparmor -y
+sudo reboot
+
+## To install SELinux and all of its' dependancies use the following commands. 
+
+sudo apt-get install policycoreutils selinux-utils selinux-basics -y
+sudo selinux-activate
+
+## To set SELinux to enforcing use the following command
+
+sudo selinux-config-enforcing
+sudo reboot
+
+## You can also use this command 'setenforce 1' to set the mode to enforcing
+## After it reboots, check the status with the following command
+
+setstatus
+
+## After changing the mode, you should always reboot. 
+## Use either of the following commands to check the status of the service and verify the changes you just made. 
+
+setstatus
+getenforce
+
+## View the log file for SELinux using the following command
+
+grep selinux /var/log/audit/audit.log
+
+## The following information came from here: https://github.com/shaurya-007/NSA-Linux-Hardening-docs/blob/main/CSI-LIMITING-PTRACE-ON-PRODUCTION-LINUX-SYSTEMS.PDF
+## Create a service file in /etc/systemd/system with the following contents: 
+'"
+[Unit]
+Description=Removes, system-wide, the ability to ptrace
+ConditionKernelCommandLine=!maintenance
+
+[Service]
+Type=forking
+Execstart=/bin/bash -c "sysctl -w kernel.yama.ptrace_scope=3"
+Execstop=
+
+[Install]
+WantedBy=default.target
+"'
+
+## Ensure that the service file created has read and execute permissions for the owner and group.
+## After creating the service file with the correct permissions, run the following command as root. 
+
+systemctl daemon-reload
+
+The following information came from here: https://github.com/shaurya-007/NSA-Linux-Hardening-docs/blob/main/Signed-Kernel-Mods-Tech-Bulletin-20171215.pdf
+## To disable module loading in order to make it less likely for attackers to introduce untrusted modules run the following command:
+
+sysctl kernel.modules_disabled=1
+
+To persist this setting across reboots, create a service that starts on boot that sleeps for a period of time long enough to initialize vital services and applications and then runs the command listed above. The following file is an example of a systemd service that disables module loading after all services are started on boot. 
+
+# /etc/systemd/system/disable-module-loading.service
+[Unit]
+Description=Disables loading of kernel modules
+[Service]
+Type=idle
+ExecStart=/sbin/sysctl kernel.modules_disabled=1
+[Install]
+WantedBy=multi-user.target
+
+## Once module loading is disabled, it cannot be re-enbled without disabling the service and rebooting, as shown below. 
+
+systemctl service disable disable-module-loading && reboot
+
+## Some modules which are needed for system operation may have normally been loaded during system operation and not at boot. To ensure these modules are available, they must be loaded at startup prior to when loading is disabled. To load these modules, list them in a file located in /etc/modules-load.d. For example, the following file explicitly loads the udf and squashfs modules. 
+
+/etc/modules-load.d/critical-mods.conf 
+udf
+squashfs
+
+## Used this site for the following information: https://docs.fedoraproject.org/en-US/fedora-coreos/grub-password/
+## Check to see if grub bootloader is installed on the system using the following command
+
+file -s /dev/sda
+
+## If grub is installed, use the following command to set a password for it. 
+
+grub2-mkpasswd-pbkdf2
+
+## Check the status of AppArmor using sudo apparmor_status before installing it with the next command, if already installed skip to next command on the list. 
+
+sudo apt install apparmor-profiles
+
+## The following information came from this site: https://ubuntu.com/server/docs/security-apparmor
+## Apparmor makes profiles for every application that is installed on the system, each profile can either be set to complain mode or enforce. 
+## There are two modes for apparmor profiles, which are complain and enforce. Complain only logs violations, while enforce actually does something about them. 
+## The next two commands will enable either of the two modes, only one can be enabled at a time. 
+
+sudo aa-complain /path/to/bin
+sudo aa-enforce /path/to/bin
+
+## 'sudo apparmor_status' is used to check the status of an AppArmor profile. 
+## To place all profiles into complain mode, use the following command: 
+
+sudo aa-complain /etc/apparmor.d/*
+
+## To place all profiles into enforce mode, use the following command: 
+
+sudo aa-enforce /etc/apparmor.d/*
+
+## The following command is used to reload all profiles: 
+
+sudo systemctl reload apparmor.service
+
+## apparmor_parser is used to load a profile into the kernel. It can also be used to reload a currently loaded profile using the -r option after modifying it to have the changes take effect. To reload a profile: 
+
+sudo apparmor_parser -r /etc/apparmor.d/profile.name
+
+
+
+
+
+
+
+NOTES ON NSA STUFF FROM THIS WEBSITE https://github.com/shaurya-007/NSA-Linux-Hardening-docs
+
+Mitigation of a Grub Bootloader vulnerability that is triggered by altering a config file that does stuff to the bootloader can mostly be litigated by encrypting the drive. 
+
+You can usually remove the ptrace feature since the debugging features are not usually used.    
+
+
+
+
+
+
+
+POSSIBLE HARDENING SCRIPTS
+
+https://github.com/konstruktoid/hardening
+https://github.com/conduro/ubuntu
+https://cisofy.com/lynis/
+
+
+
+
+
+## Consider trying to make all of the script commands run in the background while logging all errors to a file. 
+## Also make it to where you can continue the script while the last command/commands are still running that way long commands will not slow down the script. 
