@@ -1,0 +1,9 @@
+reserved words that cannot be used as variable names/identifiers:
+False None True and as assert break class if def del elif else except return for from global try import in is lambda while not or pass raise finally continue nonlocal with yield
+
+try and then indent like an if statment is a way to test code without getting the code interrupted by error statements. Must use an except after the indented code block to fall back on incase the try code throws an error. 
+
+Functions that do not return a value are called void functions. 
+
+Functions that do return a value are called fruitful functions. 
+
