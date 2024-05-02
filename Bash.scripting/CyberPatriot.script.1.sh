@@ -128,7 +128,7 @@ echo "As well, take a look at this site? https://pc-freak.net/blog/how-to-make-s
 read -p "Press enter to continue"
 echo ""
 
-# Opens gedit in order to change the default SSH port
+# Opens gedit to change the default SSH port
 echo "Note: Changing the default SSH port limits the risk of an automated attack."
 echo ""
 echo "Would you like to change the default ssh port (Recomended by People)(y or n)"
