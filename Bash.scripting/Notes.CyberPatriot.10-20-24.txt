@@ -1,1 +1,26 @@
+Notes for CyberPatriot Practice competition and just general competition notes. 
 
+Useful sites with info on Linux Mint:
+https://www.linuxbabe.com/security/ufw-firewall-debian-ubuntu-linux-mint-server
+UFW info^
+
+https://www.redhat.com/en/blog/linux-user-account-management
+User management in Linux Mint 21^
+
+
+
+
+- In addition to the obvious security vulnerabilites that need to be addressed in Linux Mint 21, make sure to enable UFW or Uncomplicated Firewall. 
+- UFW is a front-end for iptables. 
+- systemctl status iptables-persistent # command to check for iptables-persistent, which is an iptables restore service. 
+- disable said command with # sudo systemctl stop iptables-persistent # then # sudo systemctl disable iptables-persistent # remove with # sudo apt remove iptables-persistent
+- check status of iptables with systemctl status iptables
+- check UFW status with # sudo ufw status
+- enable ports 22, 80, 443, and 21 using command sudo ufw allow 22,80,443,21/tcp, sudo ufw logging on, then sudo ofw logging medium, then sudo ufw enable, then sudo ufw status verbose, then sudo systemctl enable ufw
+- Make sure that IPv6 is enabled in UFW by ensuring that IPv6=yes in the /etc/default/ufw file. 
+- IPv6 rules should always be placed after the IPv4 rules in sequence. 
+- Remember logout command in linux terminal when logging into other people's accounts that are not the auto-login account. 
+- Also don't forget to manage startup applications next round. 
+- To check if a user exists in Linux type # passwd -S account_name 
+- To expire individual passwords in Mint 21, you can use the following command: sudo passwd -e msmith
+- 
