@@ -23,4 +23,9 @@ User management in Linux Mint 21^
 - Also don't forget to manage startup applications next round. 
 - To check if a user exists in Linux type # passwd -S account_name 
 - To expire individual passwords in Mint 21, you can use the following command: sudo passwd -e msmith
+- Apply protection to home directories for all users. # chmod -v 700 $HOME
+- Should you have to undo the last command, you can use chmod -v 750 $HOME. 
+- sudo apt-get remove orca speech-dispatcher # removes speech dispatcher which is a screen reader for diabled people. 
+- Use update manager GUI.
+- Enable automatic updates through the GUI update manager. 
 - 
