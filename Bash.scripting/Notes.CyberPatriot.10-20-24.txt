@@ -28,4 +28,4 @@ User management in Linux Mint 21^
 - sudo apt-get remove orca speech-dispatcher # removes speech dispatcher which is a screen reader for diabled people. 
 - Use update manager GUI.
 - Enable automatic updates through the GUI update manager. 
-- 
+- sudo mintupdate-automation upgrade enable # configure automatic updates from the terminal. 
