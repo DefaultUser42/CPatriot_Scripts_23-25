@@ -10,6 +10,9 @@ User management in Linux Mint 21^
 https://www.makeuseof.com/linux-hardening-tips-sysadmins/
 Linux hardening for new sysadmins^
 
+https://github.com/trimstray/the-practical-linux-hardening-guide?tab=readme-ov-file#how-to-harden-linux
+Practical guide to hardening Linux (Specifically red hat linux)^
+
 
 - In addition to the obvious security vulnerabilites that need to be addressed in Linux Mint 21, make sure to enable UFW or Uncomplicated Firewall. 
 - UFW is a front-end for iptables. 
