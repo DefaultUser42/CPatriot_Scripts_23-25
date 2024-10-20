@@ -13,6 +13,11 @@ Linux hardening for new sysadmins^
 https://github.com/trimstray/the-practical-linux-hardening-guide?tab=readme-ov-file#how-to-harden-linux
 Practical guide to hardening Linux (Specifically red hat linux)^
 
+https://search.brave.com/search?q=how+to+install+and+configure+fail2ban+on+linux+mint+221&summary=1&summary_og=880adf42e96727e07cf34d
+Search conducted on Brave for how to install and configure fail2ban^
+
+
+
 
 - In addition to the obvious security vulnerabilites that need to be addressed in Linux Mint 21, make sure to enable UFW or Uncomplicated Firewall. 
 - UFW is a front-end for iptables. 
@@ -94,4 +99,28 @@ net.ipv4.icmp_ignore_bogus_error_responses=1 # ignores ICP errors
 /var/log/faillog --- logs failed logins
 }
 - Different type of loggers that can be leveraged ^
+- sudo apt install fail2ban # Installs fail2ban which is a fail safe brute force password attack prevention software, I think?
+- sudo nano /etc/fail2ban/jail.local # Create a new config file for fail2ban
+- {
+[sshd]
+port    = ssh
+logpath = /var/log/auth.log
+maxretry = 5
+findtime = 600
+bantime  = 3600
+ignoreip = 127.0.0.1/8 192.168.1.100/24
+}
+- Add the previous lines to the file ^
+- {
+port specifies the SSH port (default is 22)
+logpath specifies the log file to monitor (in this case, /var/log/auth.log)
+maxretry sets the maximum number of failed login attempts before banning (5 in this example)
+findtime sets the time window (in seconds) for counting failed login attempts (600 seconds = 10 minutes)
+bantime sets the ban duration (in seconds) for banned IP addresses (3600 seconds = 1 hour)
+ignoreip specifies IP addresses to ignore (in this example, the loopback address and a specific IP address)
+}
+- Save and close the file
+- sudo systemctl restart fail2ban # restart the service
+- sudo systemctl status fail2ban # Verify the status of fail2ban
+- You can tweak the behavior of fail2ban by messing with other config files such as '/etc/fail2ban/fail2ban.conf' and '/etc/fail2ban/jail.conf'
 - 
