@@ -9,7 +9,9 @@ remove_invalid_users() {
   for user in $(cut -d: -f1 /etc/passwd); do
     if [[ ! " ${valid_users[@]} " =~ " ${user} " ]]; then
       echo "Removing invalid user: $user"
-      userdel -r $user
+      # Ensure no processes are running before removing the user
+      pkill -u $user
+      userdel -r $user || echo "Failed to remove user: $user"
     fi
   done
 }
@@ -24,15 +26,15 @@ configure_password_policy() {
   
   # Expire passwords shorter than 10 characters
   for user in $(cut -d: -f1 /etc/passwd); do
-    password_length=$(passwd -S $user | awk '{print length($2)}')
-    if [[ $password_length -lt 10 ]]; then
+    password_hash=$(passwd -S $user | awk '{print $2}')
+    if [[ ${#password_hash} -lt 10 ]]; then
       chage -E 0 $user
     fi
   done
 
   # Force users with no password to change it
   for user in $(cut -d: -f1 /etc/passwd); do
-    if [[ -z "$(passwd -S $user | awk '{print $2}')" ]]; then
+    if [[ "$(passwd -S $user | awk '{print $2}')" == "NP" ]]; then
       chage -d 0 $user
     fi
   done
@@ -55,10 +57,16 @@ expire_old_passwords() {
 # Enable UFW and configure default rules
 configure_firewall() {
   echo "Enabling UFW firewall..."
+  # Ensure UFW is installed
+  if ! command -v ufw &>/dev/null; then
+    echo "UFW not installed. Installing..."
+    apt install -y ufw
+  fi
   ufw enable
   ufw default deny incoming
   ufw default allow outgoing
   ufw allow ssh
+  systemctl reload ufw
 }
 
 # Ensure IPv6 is enabled in UFW default config
@@ -67,6 +75,7 @@ check_ipv6_in_ufw() {
   if ! grep -q "IPV6=yes" /etc/ufw/ufw.conf; then
     echo "Enabling IPv6 in UFW..."
     sed -i 's/IPV6=no/IPV6=yes/' /etc/ufw/ufw.conf
+    systemctl reload ufw
   fi
 }
 
@@ -108,8 +117,17 @@ disable_ip_forwarding() {
 install_clamav() {
   echo "Installing ClamAV..."
   apt install -y clamav clamav-daemon
-  freshclam
-  clamscan -r / --bell -i
+}
+
+# Ask permission to run a clamscan
+run clamscan() {
+  echo "Would you like to run a clamscan?"
+  echo "Enter (y) or (n)"
+  read user
+  if [ "$user_input" == "y" ]; then
+    echo "Updating virus list and running clamscan"
+    freshclam
+    clamscan -r / --bell -i
 }
 
 # Install and configure Chrootkit
