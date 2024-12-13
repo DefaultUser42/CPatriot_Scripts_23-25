@@ -1,0 +1,11 @@
+Notes for CPatriot State Round FA 2024
+
+Consider making the GRUB menu visible during boot up and changing the boot order to where you are prompted for a password before being allowed into the boot menu.
+
+Also consider seeing what kernels are installed on the system and deleting the ones that we can no longer use. 
+
+uname -r || Will get the kernel version. 
+
+find /boot/config-* || Will get all currently installed kernel versions. 
+
+sudo apt-get autoremove --purge || Will remove all old kernel versions except the latest two. 
