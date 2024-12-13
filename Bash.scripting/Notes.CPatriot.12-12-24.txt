@@ -9,3 +9,10 @@ uname -r || Will get the kernel version.
 find /boot/config-* || Will get all currently installed kernel versions. 
 
 sudo apt-get autoremove --purge || Will remove all old kernel versions except the latest two. 
+
+Set Chrome to 'Always use secure connections' in the settings menu. Go to 'Settings > Privacy and security > Always use secure connections' and switch it to on. 
+
+Ask Mr. Lieberman if we should enable a private DNS resolver.
+
+If you do the above, also enable DNS over HTTS. 
+
